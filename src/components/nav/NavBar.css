@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    /* background-color: #333; */
+    background-color: #1b4d89;
+    /* background-color: #c8d8e4; */
+    top: 0;
+    position: fixed;
+    width: 100%;
+    margin-top: -1px;
+    
+    
+}
+
+.navbar__item {
+    flex-basis: 20%;
+    list-style-type: none;
+    float: left;
+    border-right: 1px solid #bbb;
+    
+}
+
+.navbar__link {
+    display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+
+}
+
+.navbar__link:hover {
+    background-color: #7393b3;
+}

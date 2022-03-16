@@ -1,26 +1,25 @@
-export const getCategories = () => {
-    return fetch(`http://localhost:8000/categories`, {
+export const getEventTypes = () => {
+    return fetch(`http://localhost:8000/eventtypes`, {
         headers: { "Authorization": `Token ${localStorage.getItem("token")}` }
     })
     .then(res => res.json())
 }
 
-
-export const uploadPost = (post) => {
+export const uploadEvent = (event) => {
     const fetchOptions = {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Token ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify(post)
+        body: JSON.stringify(event)
     }
-    return fetch(`http://localhost:8000/posts`, fetchOptions)
+    return fetch(`http://localhost:8000/events`, fetchOptions)
     // .then(response => response.json())
 }
 
-export const getPosts = () => {
-    return fetch('http://localhost:8000/posts', {
+export const getEvents = () => {
+    return fetch('http://localhost:8000/events', {
         headers: {
             "Authorization": `Token ${localStorage.getItem('token')}`
         }

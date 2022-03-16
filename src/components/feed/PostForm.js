@@ -5,7 +5,7 @@ import { getCategories, uploadPost } from "./postManager";
 function PostForm() {
     const history = useHistory()
     const postCaption = useRef()
-    const [selectedCategory, setSelectedCategory] = useState(0)
+    const [selectedCategory, setSelectedCategory] = useState([])
     const [postPicture, setPostPicture] = useState("")
     const [categories, setCategories] = useState([])
     const user = +localStorage.getItem("astronomer")
@@ -35,7 +35,7 @@ function PostForm() {
         const postObj = {
             user: user,
             caption: postCaption.current.value,
-            categories: +selectedCategory,
+            categories: selectedCategory,
             post_pic: postPicture
         }
 
@@ -54,11 +54,13 @@ function PostForm() {
                 
             </div>
             <div>
-                <label>Select the employee you'd like</label>
+                <label>Select the category: </label>
                 <select className="categorydropdown" onChange={(evt) => {
-                    const copy = {...selectedCategory}
-                    const emp = evt.target.value
-                    setSelectedCategory(emp)
+                    selectedCategory.push(+evt.target.value)
+                    console.log(selectedCategory)
+                    // const copy = {...selectedCategory}
+                    // copy["categories"] = evt.target.value
+                    // setSelectedCategory(emp)
                 }}>
                        <option value="0">Select a Category</option>
                        {

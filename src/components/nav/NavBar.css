@@ -1,10 +1,10 @@
-.navbar {
+/* .navbar {
     display: flex;
     flex-wrap: nowrap;
     justify-content: left;
-    /* background-color: #333; */
+    
     background-color: #1b4d89;
-    /* background-color: #c8d8e4; */
+    
     top: 0;
     position: fixed;
     width: 100%;
@@ -32,4 +32,4 @@
 
 .navbar__link:hover {
     background-color: #7393b3;
-}
+} */

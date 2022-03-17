@@ -27,7 +27,6 @@ function EventForm() {
       const createUserImageString = (event) => {
         getBase64(event.target.files[0], (base64ImageString) => {
             setEventPicture(base64ImageString)
-            console.log(base64ImageString)
         });
     }
 

@@ -22,6 +22,8 @@ function MainFeed() {
         return false
     }
 
+    
+
 
     return (
         <>
@@ -45,7 +47,7 @@ function MainFeed() {
                         }
                     </div>
                 </fieldset>
-            })
+            }).reverse()
         }
 
         </>

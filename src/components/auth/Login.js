@@ -27,6 +27,7 @@ function Login() {
                 if ("valid" in res && res.valid && "token" in res) {
                     localStorage.setItem("token", res.token)
                     localStorage.setItem("astronomer", res.userid)
+                    localStorage.setItem("isStaff", res.isStaff)
                     history.push("/")
                 }
                 else {

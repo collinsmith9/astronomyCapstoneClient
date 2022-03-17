@@ -25,3 +25,10 @@ export const getEvents = () => {
         }
     }).then(res => res.json())
 }
+
+export const approveEvent = (id) => {
+    return fetch(`http://localhost:8000/events/${id}/approveevent`, {
+        method: "PUT",
+        headers: { "Authorization": `Token ${localStorage.getItem("token")}` }
+    })
+}

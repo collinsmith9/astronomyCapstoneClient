@@ -2,6 +2,7 @@
 
 import React from "react"
 import { Route } from "react-router-dom"
+import EventApproval from "./events/EventApproval"
 import EventFeed from "./events/EventFeed"
 import EventForm from "./events/EventForm"
 import MainFeed from "./feed/MainFeed"
@@ -27,6 +28,9 @@ export const ApplicationViews = () => {
         </Route>
         <Route exact path="/newevent">
             <EventForm />
+        </Route>
+        <Route exact path="/eventapproval">
+            <EventApproval />
         </Route>
         
         

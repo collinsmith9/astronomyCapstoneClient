@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { approveEvent, getEvents } from "./eventManager";
+import { approveEvent, deleteEvent, getEvents } from "./eventManager";
 
 
 function EventApproval() {
@@ -17,6 +17,7 @@ function EventApproval() {
         }
         return false
     })
+    
 
 
     return (
@@ -34,7 +35,9 @@ function EventApproval() {
                         <div><img src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
                         <button onClick={() => {
                             approveEvent(event.id).then(() => {history.push("/events")})
-                        }}>Approve</button><button>Disapprove</button>
+                        }}>Approve</button><button onClick={() => {
+                            deleteEvent(event.id).then(() => {history.push("/events")})
+                        }}>Disapprove</button>
                     </div>
                 </fieldset>
             })

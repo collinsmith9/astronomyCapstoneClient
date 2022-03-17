@@ -26,3 +26,7 @@ export const getPosts = () => {
         }
     }).then(res => res.json())
 }
+
+export const deletePost = (id) => {
+    return fetch(`http://localhost:8000/posts/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
+}

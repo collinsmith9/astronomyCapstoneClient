@@ -25,7 +25,6 @@ function PostForm() {
       const createUserImageString = (event) => {
         getBase64(event.target.files[0], (base64ImageString) => {
             setPostPicture(base64ImageString)
-            console.log(base64ImageString)
         });
     }
 
@@ -57,10 +56,6 @@ function PostForm() {
                 <label>Select the category: </label>
                 <select className="categorydropdown" onChange={(evt) => {
                     selectedCategory.push(+evt.target.value)
-                    console.log(selectedCategory)
-                    // const copy = {...selectedCategory}
-                    // copy["categories"] = evt.target.value
-                    // setSelectedCategory(emp)
                 }}>
                        <option value="0">Select a Category</option>
                        {

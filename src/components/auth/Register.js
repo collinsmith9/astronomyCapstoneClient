@@ -41,6 +41,7 @@ function Register() {
                     if ("token" in res) {
                         localStorage.setItem("token", res.token)
                         localStorage.setItem("astronomer", res.userid)
+                        localStorage.setItem("isStaff", res.isStaff)
                         history.push("/")
                     }
                 })

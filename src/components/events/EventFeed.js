@@ -11,6 +11,13 @@ function EventFeed() {
 
     useEffect(() => {getEvents().then(setEvents)},[])
 
+    const approvedEvents = events.filter((event) => {
+        if (event.is_approved) {
+            return true
+        }
+        return false
+    })
+
 
     return (
         <>
@@ -18,7 +25,7 @@ function EventFeed() {
         <button onClick={() => {history.push("/newevent")}}>New Event</button>
 
         {
-            events.map((event) => {
+            approvedEvents.map((event) => {
                 return <fieldset key={event.id}>
                     <div>
                         <p>Posted by: {event.user?.user?.first_name} {event.user?.user?.last_name}</p>
@@ -28,7 +35,7 @@ function EventFeed() {
                         <div><img src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
                     </div>
                 </fieldset>
-            })
+            }).reverse()
         }
 
         </>

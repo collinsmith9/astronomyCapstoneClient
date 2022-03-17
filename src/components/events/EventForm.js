@@ -83,7 +83,7 @@ function EventForm() {
             </div>
             <div>
                 <button type="cancel" onClick={() => {history.push("/events")}}>Cancel</button>
-                <button type="submit_post" onClick={handlePost}> Submit Post </button>
+                <button type="submit_post" onClick={handlePost}> Submit Event </button>
             </div>
         </div>
         

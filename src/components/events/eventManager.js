@@ -32,3 +32,7 @@ export const approveEvent = (id) => {
         headers: { "Authorization": `Token ${localStorage.getItem("token")}` }
     })
 }
+
+export const deleteEvent = (id) => {
+    return fetch(`http://localhost:8000/events/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
+}

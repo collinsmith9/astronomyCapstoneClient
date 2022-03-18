@@ -6,6 +6,7 @@ import EventApproval from "./events/EventApproval"
 import EventFeed from "./events/EventFeed"
 import EventForm from "./events/EventForm"
 import MainFeed from "./feed/MainFeed"
+import PostDetail from "./feed/PostDetail"
 import PostForm from "./feed/PostForm"
 import UserProfile from "./users/UserProfile"
 
@@ -31,6 +32,9 @@ export const ApplicationViews = () => {
         </Route>
         <Route exact path="/eventapproval">
             <EventApproval />
+        </Route>
+        <Route exact path="/posts/:postId(\d+)">
+            <PostDetail />
         </Route>
         
         

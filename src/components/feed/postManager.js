@@ -63,3 +63,19 @@ export const likePost = (like) => {
 export const deletePostLike = (id) => {
     return fetch(`http://localhost:8000/postlikes/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
 }
+
+export const getSinglePost = (id) => {
+    return fetch(`http://localhost:8000/posts/${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        }
+    }).then(res => res.json())
+}
+
+export const getPostComments = (id) => {
+    return fetch(`http://localhost:8000/postcomments?post=${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        }
+    }).then(res => res.json())
+}

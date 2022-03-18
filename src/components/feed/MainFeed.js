@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { deletePost, getPosts } from "./postManager";
+import { deletePost, deletePostLike, getPostLikes, getPosts, getUsersPostLikes, likePost } from "./postManager";
 
 function MainFeed() {
     const [posts, setPosts] = useState([])
+    const [postlikes, setPostLikes] = useState([])
+    const [usersPostLikes, setUsersPostLikes] = useState([])
     const user = +localStorage.getItem("astronomer")
     const history = useHistory()
 
     useEffect(() => {
         getPosts().then(setPosts)
     },[])
+
+    useEffect(() => {
+        getUsersPostLikes(user).then(setUsersPostLikes)
+    },[])
+
+    function syncUsersPostLikes() {
+        getUsersPostLikes(user).then(setUsersPostLikes)
+    }
     
     function syncPosts() {
         getPosts().then(setPosts)
@@ -22,8 +32,31 @@ function MainFeed() {
         return false
     }
 
-    
+    const didUserLike = usersPostLikes.find((postLike) => {
+        if (postLike.user.id === user) {
+            return true
+        }
+        return false
+    }) 
 
+    function handleLikePost(post) {
+
+        function likeThePost() {
+            const likeObj = {
+                post: post.id,
+                user: user
+            }
+            likePost(likeObj).then(() => {syncUsersPostLikes()})
+        }
+
+        function unlikeThePost() {
+            deletePostLike(didUserLike.id).then(() => {syncUsersPostLikes()})
+        }
+
+        didUserLike
+        ? unlikeThePost()
+        : likeThePost()
+    }
 
     return (
         <>
@@ -38,6 +71,11 @@ function MainFeed() {
                         <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
                         <h4>Caption: </h4><p>{post.caption}</p>
                         <div><img src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
+                        <button onClick={() => {handleLikePost(post)}}>{
+                            didUserLike
+                            ? "Unlike"
+                            : "Like"
+                        }</button>
                         {
                             postDeleteAuthorize(post)
                             ? <div>

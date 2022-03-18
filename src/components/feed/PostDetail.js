@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { deletePost, deletePostLike, getPostLikes, getPosts, getUsersPostLikes, likePost } from "./postManager";
 
-function MainFeed() {
-    const [posts, setPosts] = useState([])
-    const [postlikes, setPostLikes] = useState([])
-    const [usersPostLikes, setUsersPostLikes] = useState([])
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { deletePost, deletePostLike, getPostComments, getSinglePost, getUsersPostLikes, likePost } from './postManager';
+
+
+function PostDetail() {
+    const [post, setPost] = useState({})
+    const [postComments, setPostComments] = useState([])
+    const {postId} = useParams()
     const user = +localStorage.getItem("astronomer")
+    const [usersPostLikes, setUsersPostLikes] = useState([])
     const history = useHistory()
 
     useEffect(() => {
-        getPosts().then(setPosts)
+        getSinglePost(postId).then(setPost)
+    },[])
+
+    useEffect(() => {
+        getPostComments(postId).then(setPostComments)
     },[])
 
     useEffect(() => {
@@ -21,20 +28,16 @@ function MainFeed() {
     function syncUsersPostLikes() {
         getUsersPostLikes(user).then(setUsersPostLikes)
     }
-    
-    function syncPosts() {
-        getPosts().then(setPosts)
-    }
 
     function postDeleteAuthorize(post) {
-        if (post.user.id === user) {
+        if (post.user?.id === user) {
             return true
         }
         return false
     }
 
     const didUserLike = usersPostLikes.find((postLike) => {
-        if (postLike.user.id === user) {
+        if (postLike.user?.id === user) {
             return true
         }
         return false
@@ -59,19 +62,14 @@ function MainFeed() {
         : likeThePost()
     }
 
+
     return (
         <>
-        <h2>Main feed</h2>
-
-        <button onClick={() => {history.push("/newpost")}}>New Post</button>
-        {
-            posts.map((post) => {
-                return <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
-                <fieldset key={post.id}>
+            <fieldset key={post.id}>
                     <div>
                         <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
                         <h4>Caption: </h4><p>{post.caption}</p>
-                        <div><img src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
+                        <div><img src={`http://localhost:8000${post?.post_pic}`} alt="hello" /></div>
                         <button onClick={() => {handleLikePost(post)}}>{
                             didUserLike
                             ? "Unlike"
@@ -80,23 +78,24 @@ function MainFeed() {
                         {
                             postDeleteAuthorize(post)
                             ? <div>
-                                <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
+                                <button onClick={() => {deletePost(post.id).then(() => {history.push("/")})}}>Delete</button>
                             </div>
                             : ""
                         }
                     </div>
                 </fieldset>
-                </Link>
-            }).reverse()
-        }
-
+                <fieldset>
+                    {
+                        postComments.map((postComment) => {
+                            return <fieldset><div>
+                                <p>Posted by: {postComment.user?.user?.first_name} {postComment.user?.user?.last_name}</p>
+                                <p>{postComment.comment}</p>
+                            </div></fieldset>
+                        })
+                    }
+                </fieldset>
         </>
     )
-
-
 }
 
-export default MainFeed
-
-
-
+export default PostDetail;

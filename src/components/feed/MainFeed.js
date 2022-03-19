@@ -66,27 +66,41 @@ function MainFeed() {
         <button onClick={() => {history.push("/newpost")}}>New Post</button>
         {
             posts.map((post) => {
-                return <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
+                return <div>
                 <fieldset key={post.id}>
+                    <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
                     <div>
                         <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
                         <h4>Caption: </h4><p>{post.caption}</p>
                         <div><img src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
-                        <button onClick={() => {handleLikePost(post)}}>{
+                        {/* <button onClick={() => {handleLikePost(post)}}>{
                             didUserLike
                             ? "Unlike"
                             : "Like"
-                        }</button>
-                        {
+                        }</button> */}
+                        {/* {
                             postDeleteAuthorize(post)
                             ? <div>
                                 <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
                             </div>
                             : ""
-                        }
+                        } */}
                     </div>
-                </fieldset>
                 </Link>
+                    <button onClick={() => {handleLikePost(post)}}>{
+                        didUserLike
+                        ? "Unlike"
+                        : "Like"
+                    }</button>
+                    {
+                        postDeleteAuthorize(post)
+                        ? <div>
+                                <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
+                            </div>
+                        : ""
+                    }
+                </fieldset>
+                </div>
             }).reverse()
         }
 

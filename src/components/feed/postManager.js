@@ -79,3 +79,12 @@ export const getPostComments = (id) => {
         }
     }).then(res => res.json())
 }
+
+
+export const getUsersPosts = (user) => {
+    return fetch(`http://localhost:8000/posts?user=${user}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        }
+    }).then(res => res.json())
+}

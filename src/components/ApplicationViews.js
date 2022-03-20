@@ -21,7 +21,7 @@ export const ApplicationViews = () => {
         <Route exact path="/events">
             <EventFeed />
         </Route>
-        <Route exact path="/userprofile">
+        <Route exact path="/userprofile/:userId(\d+)">
             <UserProfile />
         </Route>
         <Route exact path="/newpost">

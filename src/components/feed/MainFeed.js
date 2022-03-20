@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deletePost, deletePostLike, getPostLikes, getPosts, getUsersPostLikes, likePost } from "./postManager";
+import "./post.css"
 
 function MainFeed() {
     const [posts, setPosts] = useState([])
@@ -66,13 +67,14 @@ function MainFeed() {
         <button onClick={() => {history.push("/newpost")}}>New Post</button>
         {
             posts.map((post) => {
-                return <div>
-                <fieldset key={post.id}>
+                return <div className="post">
+                <fieldset key={post.id} className="fullPost">
                     <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
-                    <div>
+                    <div className="postSpacing">
                         <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
-                        <h4>Caption: </h4><p>{post.caption}</p>
-                        <div><img src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
+                        <section className="caption__style">
+                        <h4>Caption: </h4><p>{post.caption}</p></section>
+                        <picture classname="postPicture"><img src={`http://localhost:8000${post.post_pic}`} alt="hello" className="postPicture" /></picture>
                         {/* <button onClick={() => {handleLikePost(post)}}>{
                             didUserLike
                             ? "Unlike"
@@ -86,7 +88,7 @@ function MainFeed() {
                             : ""
                         } */}
                     </div>
-                </Link>
+                </Link><div className="buttons">
                     <button onClick={() => {handleLikePost(post)}}>{
                         didUserLike
                         ? "Unlike"
@@ -98,7 +100,7 @@ function MainFeed() {
                                 <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
                             </div>
                         : ""
-                    }
+                    }</div>
                 </fieldset>
                 </div>
             }).reverse()

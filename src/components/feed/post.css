@@ -1,0 +1,39 @@
+.post {
+    display: flex;
+    justify-content: center;
+    
+    border-top: 1px solid black;
+    width: 700px;
+    height: 600px;
+
+    
+    
+}
+
+.fullPost {
+    width: 700px;
+}
+
+.postPicture {
+    
+    width: 410px;
+    height: auto;
+}
+
+.caption__style {
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 2.5em;
+    justify-content: center;
+
+}
+
+.postSpacing {
+    padding: 1em;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}

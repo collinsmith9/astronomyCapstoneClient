@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import CommentForm from './CommentForm';
 import { deleteComment, deletePost, deletePostLike, getPostComments, getSinglePost, getUsersPostLikes, likePost } from './postManager';
 
 
@@ -12,6 +13,7 @@ function PostDetail() {
     const user = +localStorage.getItem("astronomer")
     const [usersPostLikes, setUsersPostLikes] = useState([])
     const history = useHistory()
+    const [commentForm, setCommentForm] = useState(false)
 
     useEffect(() => {
         getSinglePost(postId).then(setPost)
@@ -86,6 +88,9 @@ function PostDetail() {
                             ? "Unlike"
                             : "Like"
                         }</button>
+                        <button onClick={() => {
+                            setCommentForm(true)
+                        }}>Comment</button>
                         {
                             postDeleteAuthorize(post)
                             ? <div>
@@ -95,6 +100,11 @@ function PostDetail() {
                         }
                     </div>
                 </fieldset>
+                {
+                    commentForm
+                    ? <CommentForm commentForm={commentForm} setCommentForm={setCommentForm} post={post.id} syncPostComments={syncPostComments}/>
+                    : ""
+                }
                 <fieldset>
                     {
                         postComments.map((postComment) => {
@@ -108,7 +118,7 @@ function PostDetail() {
                                 : ""
                             }
                             </fieldset>
-                        })
+                        }).reverse()
                     }
                 </fieldset>
         </>

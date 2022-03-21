@@ -92,6 +92,8 @@ function MainFeed() {
                         ? "Unlike"
                         : "Like"
                     }</button>
+                    <button onClick={() => {history.push(`/posts/${post.id}`)}}>Comment</button>
+
                     {
                         postDeleteAuthorize(post)
                         ? <div>

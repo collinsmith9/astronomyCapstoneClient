@@ -92,3 +92,16 @@ export const getUsersPosts = (user) => {
 export const deleteComment = (id) => {
     return fetch(`http://localhost:8000/postcomments/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
 }
+
+export const uploadPostComment = (comment) => {
+    const fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(comment)
+    }
+    return fetch(`http://localhost:8000/postcomments`, fetchOptions)
+    // .then(response => response.json())
+}

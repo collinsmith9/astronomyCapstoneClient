@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { deletePost, deletePostLike, getPosts, getUsersPostLikes, getUsersPosts, likePost } from "../feed/postManager";
-import { followUser, getUser, getUserFollows, unfollowUser } from "./userManager";
+import { editBio, followUser, getUser, getUserFollows, unfollowUser } from "./userManager";
 
 function UserProfile() {
     const [usersPosts, setUsersPosts] = useState([])
@@ -11,6 +11,8 @@ function UserProfile() {
     const {userId} = useParams()
     const user = +localStorage.getItem("astronomer")
     const [usersPostLikes, setUsersPostLikes] = useState([])
+    const [editBool, setEditBool] = useState(false)
+    const newBio = useRef()
 
     console.log(theUser)
     useEffect(() => {
@@ -24,6 +26,10 @@ function UserProfile() {
     useEffect(() => {
         getUserFollows(userId).then(setUsersFollows)
     },[])
+
+    function syncUserInfo() {
+        getUser(userId).then(setTheUser)
+    }
 
     function loggedInUserCheck() {
         if (user === theUser.id) {
@@ -105,6 +111,32 @@ function UserProfile() {
 
     }
 
+    function editBioForm() {
+        return <div>
+            <input type="text" ref={newBio} placeholder="Type bio here..." required autoFocus />
+            <button onClick={() => {setEditBool(false)}}>Cancel</button><button onClick={handleEdit}>Submit</button>
+            
+            </div>
+
+        
+    }
+
+    function handleEdit(evt) {
+        evt.preventDefault()
+
+        const editedBio = {
+            bio: newBio.current.value
+        }
+
+        editBio(editedBio, user).then(() => {
+            syncUserInfo()
+            setEditBool(false)
+        
+        })
+
+
+    }
+
 
 
     return (
@@ -113,7 +145,7 @@ function UserProfile() {
         <h1>{theUser.user?.first_name} {theUser.user?.last_name}'s profile</h1>
         {
             loggedInUserCheck()
-            ? <button>Edit Bio</button>
+            ? <button onClick={() => {setEditBool(true)}}>Edit Bio</button>
             : <button onClick={() => {
                 handleFollow()
             }}>{
@@ -122,6 +154,13 @@ function UserProfile() {
                 : "Follow"
             }</button>
         }
+
+        {
+            !!editBool
+            ? editBioForm()
+            : ""
+        }
+
         <p>{theUser.bio}</p>
         {/* <button>Future Follow Button</button> */}
         </fieldset>

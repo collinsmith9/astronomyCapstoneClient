@@ -30,3 +30,16 @@ export const followUser = (follow) => {
 export const unfollowUser = (followId) => {
     return fetch(`http://localhost:8000/follows/${followId}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
 }
+
+export const editBio = (bio, user) => {
+    const fetchOptions = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(bio)
+    }
+    return fetch(`http://localhost:8000/users/${user}`, fetchOptions)
+    // .then(response => response.json())
+}

@@ -68,9 +68,9 @@ function MainFeed() {
             posts.map((post) => {
                 return <div>
                 <fieldset key={post.id}>
+                        <p>Posted by:<Link to={`/userprofile/${post.user?.id}`}> {post.user?.user?.first_name} {post.user?.user?.last_name}</Link></p>
                     <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
                     <div>
-                        <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
                         <h4>Caption: </h4><p>{post.caption}</p>
                         <div><img src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
                         {/* <button onClick={() => {handleLikePost(post)}}>{

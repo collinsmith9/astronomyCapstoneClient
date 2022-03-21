@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { deletePost, deletePostLike, getPostComments, getSinglePost, getUsersPostLikes, likePost } from './postManager';
+import { deleteComment, deletePost, deletePostLike, getPostComments, getSinglePost, getUsersPostLikes, likePost } from './postManager';
 
 
 function PostDetail() {
@@ -20,6 +20,10 @@ function PostDetail() {
     useEffect(() => {
         getPostComments(postId).then(setPostComments)
     },[])
+
+    function syncPostComments() {
+        getPostComments(postId).then(setPostComments)
+    }
 
     useEffect(() => {
         getUsersPostLikes(user).then(setUsersPostLikes)
@@ -62,6 +66,13 @@ function PostDetail() {
         : likeThePost()
     }
 
+    function didTheyPostTheComment(comment) {
+        if (comment.user.id === user) {
+            return true
+        }
+        return false
+    }
+
 
     return (
         <>
@@ -90,7 +101,13 @@ function PostDetail() {
                             return <fieldset><div>
                                 <p>Posted by: {postComment.user?.user?.first_name} {postComment.user?.user?.last_name}</p>
                                 <p>{postComment.comment}</p>
-                            </div></fieldset>
+                            </div>
+                            {
+                                didTheyPostTheComment(postComment)
+                                ? <button onClick={() => {deleteComment(postComment.id).then(syncPostComments)}}>Delete Comment</button>
+                                : ""
+                            }
+                            </fieldset>
                         })
                     }
                 </fieldset>

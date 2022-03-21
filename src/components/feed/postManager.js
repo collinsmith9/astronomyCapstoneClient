@@ -88,3 +88,7 @@ export const getUsersPosts = (user) => {
         }
     }).then(res => res.json())
 }
+
+export const deleteComment = (id) => {
+    return fetch(`http://localhost:8000/postcomments/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
+}

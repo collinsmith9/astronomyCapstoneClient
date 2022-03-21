@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { deletePost, deletePostLike, getPosts, getUsersPostLikes, getUsersPosts, likePost } from "../feed/postManager";
-import { getUser } from "./userManager";
+import { followUser, getUser, getUserFollows, unfollowUser } from "./userManager";
 
 function UserProfile() {
     const [usersPosts, setUsersPosts] = useState([])
     const [theUser, setTheUser] = useState({})
+    const [usersFollows, setUsersFollows] = useState([])
     const {userId} = useParams()
     const user = +localStorage.getItem("astronomer")
     const [usersPostLikes, setUsersPostLikes] = useState([])
 
-    
+    console.log(theUser)
     useEffect(() => {
         getUsersPosts(userId).then(setUsersPosts)
     },[])
@@ -20,12 +21,27 @@ function UserProfile() {
         getUser(userId).then(setTheUser)
     },[])
 
+    useEffect(() => {
+        getUserFollows(userId).then(setUsersFollows)
+    },[])
+
+    function loggedInUserCheck() {
+        if (user === theUser.id) {
+            return true
+        }
+        return false
+    }
+
     function syncUsersPostLikes() {
         getUsersPostLikes(user).then(setUsersPostLikes)
     }
     
     function syncPosts() {
         getUsersPosts(userId).then(setUsersPosts)
+    }
+
+    function syncUsersFollows() {
+        getUserFollows(theUser.id).then(setUsersFollows)
     }
 
     function postDeleteAuthorize(post) {
@@ -61,13 +77,53 @@ function UserProfile() {
         : likeThePost()
     }
 
+    const followCheck = usersFollows.find((followObj) => {
+        if (followObj.follower.id === user) {
+            return true
+        }
+        return false
+    })
+
+    function handleFollow() {
+
+        function followTheUser() {
+            const followObj = {
+                follower: user,
+                person_followed: theUser?.id
+            }
+            followUser(followObj).then(() => {syncUsersFollows()})
+        }
+
+        function unfollowTheUser() {
+            unfollowUser(followCheck.id).then(() => {syncUsersFollows()})
+        }
+
+        followCheck
+        ? unfollowTheUser()
+        : followTheUser()
+
+
+    }
+
 
 
     return (
         <>
         <fieldset>
         <h1>{theUser.user?.first_name} {theUser.user?.last_name}'s profile</h1>
-        <p>{theUser.bio}</p><button>Future Follow Button</button>
+        {
+            loggedInUserCheck()
+            ? <button>Edit Bio</button>
+            : <button onClick={() => {
+                handleFollow()
+            }}>{
+                followCheck
+                ? "Unfollow"
+                : "Follow"
+            }</button>
+        }
+        <p>{theUser.bio}</p>
+        {/* <button>Future Follow Button</button> */}
         </fieldset>
 
         {

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getEvents } from "./eventManager";
+import { deleteEvent, getEvents } from "./eventManager";
 
 
 function EventFeed() {
@@ -10,6 +10,10 @@ function EventFeed() {
     const user = +localStorage.getItem("astronomer")
 
     useEffect(() => {getEvents().then(setEvents)},[])
+
+    function syncEvents() {
+        getEvents().then(setEvents)
+    }
 
     const approvedEvents = events.filter((event) => {
         if (event.is_approved) {
@@ -34,6 +38,13 @@ function EventFeed() {
                         <p>Seen from: {event.seen_from}</p>
                         <div><img src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
                     </div>
+                    {
+                        JSON.parse(localStorage.getItem('isStaff')) === true
+                        ? <button onClick={() => {
+                            deleteEvent(event.id).then(syncEvents)
+                        }}>Delete Event</button>
+                        : ""
+                    }
                 </fieldset>
             }).reverse()
         }

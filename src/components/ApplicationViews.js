@@ -3,6 +3,7 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import EventApproval from "./events/EventApproval"
+import EventDetail from "./events/EventDetail"
 import EventFeed from "./events/EventFeed"
 import EventForm from "./events/EventForm"
 import EditPost from "./feed/EditPost"
@@ -39,6 +40,9 @@ export const ApplicationViews = () => {
         </Route>
         <Route exact path="/edit/posts/:postId(\d+)">
             <EditPost />
+        </Route>
+        <Route exact path="/events/:eventId(\d+)">
+            <EventDetail />
         </Route>
         
         

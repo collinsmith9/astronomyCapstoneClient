@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteEvent, deleteEventLike, getEvents, getUsersEventLikes, likeEvent } from "./eventManager";
 
@@ -71,13 +72,14 @@ function EventFeed() {
         {
             approvedEvents.map((event) => {
                 return <fieldset key={event.id}>
+                    <Link to={`/events/${event.id}`}>
                     <div>
                         <p>Posted by: {event.user?.user?.first_name} {event.user?.user?.last_name}</p>
                         <p>Event Type: {event.event_type?.event_type}</p>
                         <p>Description: {event.description}</p>
                         <p>Seen from: {event.seen_from}</p>
                         <div><img src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
-                    </div>
+                    </div></Link>
                     {
                         JSON.parse(localStorage.getItem('isStaff')) === true
                         ? <button onClick={() => {

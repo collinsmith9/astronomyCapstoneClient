@@ -60,3 +60,36 @@ export const likeEvent = (like) => {
 export const deleteEventLike = (id) => {
     return fetch(`http://localhost:8000/eventlikes/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
 }
+
+export const getSingleEvent = (id) => {
+    return fetch(`http://localhost:8000/events/${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        }
+    }).then(res => res.json())
+}
+
+export const getEventComments = (id) => {
+    return fetch(`http://localhost:8000/eventcomments?event=${id}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        }
+    }).then(res => res.json())
+}
+
+export const deleteEventComment = (id) => {
+    return fetch(`http://localhost:8000/eventcomments/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
+}
+
+export const uploadEventComment = (comment) => {
+    const fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(comment)
+    }
+    return fetch(`http://localhost:8000/eventcomments`, fetchOptions)
+    // .then(response => response.json())
+}

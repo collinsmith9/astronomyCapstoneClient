@@ -1,15 +1,18 @@
 
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { deleteEvent, getEvents } from "./eventManager";
+import { deleteEvent, deleteEventLike, getEvents, getUsersEventLikes, likeEvent } from "./eventManager";
 
 
 function EventFeed() {
     const [events, setEvents] = useState([])
     const history = useHistory()
     const user = +localStorage.getItem("astronomer")
+    const [usersEventLikes, setUsersEventLikes] = useState([])
 
     useEffect(() => {getEvents().then(setEvents)},[])
+
+    useEffect(() => {getUsersEventLikes(user).then(setUsersEventLikes)},[])
 
     function syncEvents() {
         getEvents().then(setEvents)
@@ -21,6 +24,43 @@ function EventFeed() {
         }
         return false
     })
+
+    function syncUsersEventLikes() {
+        getUsersEventLikes(user).then(setUsersEventLikes)
+    }
+
+    // const didUserLike = (event) => {usersEventLikes.find((eventLike) => {
+    //     if (+eventLike.event?.id === +event.id) {
+    //         return true
+    //     }
+    //     return false
+    // })} 
+    
+    function handleEventLike(event) {
+        
+        const x = usersEventLikes.find((eventLike) => {
+            if (+eventLike.event?.id === +event.id) {
+                return true
+            }
+            return false
+        })
+
+        function likeTheEvent() {
+            const likeObj = {
+                event: event.id,
+                user: user
+            }
+            likeEvent(likeObj).then(() => {syncUsersEventLikes()})
+        }
+
+        function unlikeTheEvent() {
+            deleteEventLike(x.id).then(() => {syncUsersEventLikes()})
+        }
+
+        x
+        ? unlikeTheEvent()
+        : likeTheEvent()
+    }
 
 
     return (
@@ -45,6 +85,19 @@ function EventFeed() {
                         }}>Delete Event</button>
                         : ""
                     }
+                     <button onClick={() => {handleEventLike(event)}}>{
+                        usersEventLikes.find((eventLike) => {
+                            if (+eventLike.event?.id === +event.id) {
+                                return true
+                            }
+                            return false
+                        })
+                        ? "Unlike"
+                        : "Like"
+                        // didUserLike(event)
+                        // ? "Unlike"
+                        // : "Like"
+                    }</button>
                 </fieldset>
             }).reverse()
         }

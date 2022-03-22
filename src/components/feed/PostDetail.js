@@ -42,14 +42,15 @@ function PostDetail() {
         return false
     }
 
-    const didUserLike = usersPostLikes.find((postLike) => {
-        if (postLike.user?.id === user) {
-            return true
-        }
-        return false
-    }) 
-
+    
     function handleLikePost(post) {
+
+        const didUserLike = usersPostLikes.find((postLike) => {
+            if (postLike.post?.id === post.id) {
+                return true
+            }
+            return false
+        }) 
 
         function likeThePost() {
             const likeObj = {
@@ -84,7 +85,12 @@ function PostDetail() {
                         <h4>Caption: </h4><p>{post.caption}</p>
                         <div><img src={`http://localhost:8000${post?.post_pic}`} alt="hello" /></div>
                         <button onClick={() => {handleLikePost(post)}}>{
-                            didUserLike
+                            usersPostLikes.find((postLike) => {
+                                if (postLike.post?.id === post.id) {
+                                    return true
+                                }
+                                return false
+                            })
                             ? "Unlike"
                             : "Like"
                         }</button>

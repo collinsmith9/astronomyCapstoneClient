@@ -105,3 +105,16 @@ export const uploadPostComment = (comment) => {
     return fetch(`http://localhost:8000/postcomments`, fetchOptions)
     // .then(response => response.json())
 }
+
+export const editPost = (id, editOptions) => {
+    fetch(`http://localhost:8000/posts/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(editOptions)
+    })
+
+        
+}

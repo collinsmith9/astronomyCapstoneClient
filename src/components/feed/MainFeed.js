@@ -98,6 +98,7 @@ function MainFeed() {
                         postDeleteAuthorize(post)
                         ? <div>
                                 <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
+                                <button onClick={() => {history.push(`/edit/posts/${post.id}`)}}>Edit Post</button>
                             </div>
                         : ""
                     }

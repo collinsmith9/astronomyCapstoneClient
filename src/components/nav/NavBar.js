@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 
 function NavBar() {
     const admin = +localStorage.getItem("admin")
+    const user = +localStorage.getItem("astronomer")
     return (
         <ul className="navbar">
             <li className="navbar__item active">
@@ -14,7 +15,7 @@ function NavBar() {
                 <Link className="navbar__link" to="/events">Event Feed</Link>
             </li>
             <li className="navbar__item active">
-                <Link className="navbar__link" to="/userprofile">My Profile</Link>
+                <Link className="navbar__link" to={`/userprofile/${user}`}>My Profile</Link>
             </li>
             {
                 !! JSON.parse(localStorage.getItem('isStaff')) === true

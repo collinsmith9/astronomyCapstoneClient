@@ -27,6 +27,10 @@ function UserProfile() {
         getUserFollows(userId).then(setUsersFollows)
     },[])
 
+    useEffect(() => {
+        getUsersPostLikes(user).then(setUsersPostLikes)
+    },[])
+
     function syncUserInfo() {
         getUser(userId).then(setTheUser)
     }
@@ -57,14 +61,14 @@ function UserProfile() {
         return false
     }
 
-    const didUserLike = usersPostLikes.find((postLike) => {
-        if (postLike.user.id === user) {
-            return true
-        }
-        return false
-    }) 
-
+    
     function handleLikePost(post) {
+        const didUserLike = usersPostLikes.find((postLike) => {
+            if (postLike.post.id === post.id) {
+                return true
+            }
+            return false
+        }) 
 
         function likeThePost() {
             const likeObj = {
@@ -189,7 +193,12 @@ function UserProfile() {
                     </div>
                 </Link>
                     <button onClick={() => {handleLikePost(post)}}>{
-                        didUserLike
+                        usersPostLikes.find((postLike) => {
+                            if (postLike.post.id === post.id) {
+                                return true
+                            }
+                            return false
+                        })
                         ? "Unlike"
                         : "Like"
                     }</button>

@@ -17,7 +17,6 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
         getCategories().then(setCategories)
     },[])
 
-
     const getBase64 = (file, callback) => {
         const reader = new FileReader();
         reader.addEventListener('load', () => callback(reader.result));
@@ -136,16 +135,6 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
 
                         })
                     }
-                    {/* <select className="categorydropdown" onChange={(evt) => {
-                        editCategories.push(+evt.target.value)
-                    }}>
-                        <option value="0">Select a Category</option>
-                        {
-                            categories.map((category) => {
-                                return <option key={`category--${category.id}`} value={category.id}>{category.category}</option>
-                            })
-                        }
-                    </select> */}
                 </div>
                 <div className="field">
                 <label>Replace Image: </label>
@@ -173,16 +162,6 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
 
                         })
                     }
-                    {/* <select className="categorydropdown" onChange={(evt) => {
-                        selectedCategory.push(+evt.target.value)
-                    }}>
-                        <option value="0">Select a Category</option>
-                        {
-                            categories.map((category) => {
-                                return <option key={`category--${category.id}`} value={category.id}>{category.category}</option>
-                            })
-                        }
-                    </select> */}
                 </div>
                 <div className="field">
                 <input type="file" id="post_image" onChange={createUserImageString} />

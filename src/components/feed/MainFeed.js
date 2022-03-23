@@ -28,7 +28,7 @@ function MainFeed() {
     }
 
     function postDeleteAuthorize(post) {
-        if (post.user.id === user) {
+        if (post.user.id === user || JSON.parse(localStorage.getItem("isStaff")) === true) {
             return true
         }
         return false

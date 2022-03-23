@@ -17,6 +17,8 @@ function EditPost() {
         getSinglePost(postId).then((res) => {
             setPostToEdit(res)
             setEditCategories(res.categories)
+            setNewImgStr(res.post_pic)
+            
         })
     },[])
 

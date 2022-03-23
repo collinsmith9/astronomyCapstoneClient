@@ -34,14 +34,15 @@ function MainFeed() {
         return false
     }
 
-    const didUserLike = usersPostLikes.find((postLike) => {
-        if (postLike.user.id === user) {
-            return true
-        }
-        return false
-    }) 
-
+    
     function handleLikePost(post) {
+
+        const didUserLike = usersPostLikes.find((postLike) => {
+            if (postLike.post.id === post.id) {
+                return true
+            }
+            return false
+        }) 
 
         function likeThePost() {
             const likeObj = {
@@ -67,14 +68,14 @@ function MainFeed() {
         <button onClick={() => {history.push("/newpost")}}>New Post</button>
         {
             posts.map((post) => {
-                return <div className="post">
-                <fieldset key={post.id} className="fullPost">
+                return <div className="fullPost">
+                <fieldset key={post.id} className="post">
+                        <p>Posted by:<Link to={`/userprofile/${post.user?.id}`}> {post.user?.user?.first_name} {post.user?.user?.last_name}</Link></p>
                     <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
-                    <div className="postSpacing">
-                        <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
-                        <section className="caption__style">
-                        <h4>Caption: </h4><p>{post.caption}</p></section>
-                        <picture classname="postPicture"><img src={`http://localhost:8000${post.post_pic}`} alt="hello" className="postPicture" /></picture>
+                    <div>
+                        {/* <h4>Caption: </h4> */}
+                        <p className="caption__style">Caption: {post.caption}</p>
+                        <div><img className="postPicture" src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
                         {/* <button onClick={() => {handleLikePost(post)}}>{
                             didUserLike
                             ? "Unlike"
@@ -88,19 +89,27 @@ function MainFeed() {
                             : ""
                         } */}
                     </div>
-                </Link><div className="buttons">
+                </Link><div className="buttons"><div >
                     <button onClick={() => {handleLikePost(post)}}>{
-                        didUserLike
+                        usersPostLikes.find((postLike) => {
+                            if (postLike.post.id === post.id) {
+                                return true
+                            }
+                            return false
+                        })
                         ? "Unlike"
                         : "Like"
                     }</button>
+                    <button onClick={() => {history.push(`/posts/${post.id}`)}}>Comment</button>
+
                     {
                         postDeleteAuthorize(post)
-                        ? <div>
+                        ? <div >
                                 <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
+                                <button onClick={() => {history.push(`/edit/posts/${post.id}`)}}>Edit Post</button>
                             </div>
                         : ""
-                    }</div>
+                    }</div></div>
                 </fieldset>
                 </div>
             }).reverse()

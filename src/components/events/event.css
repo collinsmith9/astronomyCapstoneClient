@@ -1,4 +1,4 @@
-.post {
+.event {
     display: flex;
     justify-content: center;
     
@@ -14,13 +14,13 @@
     width: 700px;
 } */
 
-.postPicture {
+.eventPicture {
     
     width: 480px;
     height: auto;
 }
 
-.caption__style {
+.description {
     display: flex;
     flex-wrap: wrap;
     padding-right: 2.5em;
@@ -32,10 +32,10 @@
     padding: 1em;
 }
 
-.buttons {
+.eventbuttons {
     display: flex;
     
     
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
     margin-bottom: 0;
 }

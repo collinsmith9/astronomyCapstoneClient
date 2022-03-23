@@ -3,8 +3,10 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import EventApproval from "./events/EventApproval"
+import EventDetail from "./events/EventDetail"
 import EventFeed from "./events/EventFeed"
 import EventForm from "./events/EventForm"
+import EditPost from "./feed/EditPost"
 import MainFeed from "./feed/MainFeed"
 import PostDetail from "./feed/PostDetail"
 import PostForm from "./feed/PostForm"
@@ -21,7 +23,7 @@ export const ApplicationViews = () => {
         <Route exact path="/events">
             <EventFeed />
         </Route>
-        <Route exact path="/userprofile">
+        <Route exact path="/userprofile/:userId(\d+)">
             <UserProfile />
         </Route>
         <Route exact path="/newpost">
@@ -35,6 +37,12 @@ export const ApplicationViews = () => {
         </Route>
         <Route exact path="/posts/:postId(\d+)">
             <PostDetail />
+        </Route>
+        <Route exact path="/edit/posts/:postId(\d+)">
+            <EditPost />
+        </Route>
+        <Route exact path="/events/:eventId(\d+)">
+            <EventDetail />
         </Route>
         
         

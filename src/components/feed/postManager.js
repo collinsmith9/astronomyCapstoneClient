@@ -79,3 +79,42 @@ export const getPostComments = (id) => {
         }
     }).then(res => res.json())
 }
+
+
+export const getUsersPosts = (user) => {
+    return fetch(`http://localhost:8000/posts?user=${user}`, {
+        headers: {
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        }
+    }).then(res => res.json())
+}
+
+export const deleteComment = (id) => {
+    return fetch(`http://localhost:8000/postcomments/${id}`, {method: "DELETE", headers: {'Content-Type': 'application/json', "Authorization": `Token ${localStorage.getItem('token')}`}})
+}
+
+export const uploadPostComment = (comment) => {
+    const fetchOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(comment)
+    }
+    return fetch(`http://localhost:8000/postcomments`, fetchOptions)
+    // .then(response => response.json())
+}
+
+export const editPost = (id, editOptions) => {
+    fetch(`http://localhost:8000/posts/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(editOptions)
+    })
+
+        
+}

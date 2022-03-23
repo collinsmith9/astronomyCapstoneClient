@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { deletePost, deletePostLike, getPostComments, getSinglePost, getUsersPostLikes, likePost } from './postManager';
+import CommentForm from './CommentForm';
+import { deleteComment, deletePost, deletePostLike, getPostComments, getSinglePost, getUsersPostLikes, likePost } from './postManager';
 
 
 function PostDetail() {
@@ -12,6 +13,7 @@ function PostDetail() {
     const user = +localStorage.getItem("astronomer")
     const [usersPostLikes, setUsersPostLikes] = useState([])
     const history = useHistory()
+    const [commentForm, setCommentForm] = useState(false)
 
     useEffect(() => {
         getSinglePost(postId).then(setPost)
@@ -20,6 +22,10 @@ function PostDetail() {
     useEffect(() => {
         getPostComments(postId).then(setPostComments)
     },[])
+
+    function syncPostComments() {
+        getPostComments(postId).then(setPostComments)
+    }
 
     useEffect(() => {
         getUsersPostLikes(user).then(setUsersPostLikes)
@@ -36,14 +42,15 @@ function PostDetail() {
         return false
     }
 
-    const didUserLike = usersPostLikes.find((postLike) => {
-        if (postLike.user?.id === user) {
-            return true
-        }
-        return false
-    }) 
-
+    
     function handleLikePost(post) {
+
+        const didUserLike = usersPostLikes.find((postLike) => {
+            if (postLike.post?.id === post.id) {
+                return true
+            }
+            return false
+        }) 
 
         function likeThePost() {
             const likeObj = {
@@ -62,6 +69,13 @@ function PostDetail() {
         : likeThePost()
     }
 
+    function didTheyPostTheComment(comment) {
+        if (comment.user.id === user) {
+            return true
+        }
+        return false
+    }
+
 
     return (
         <>
@@ -71,10 +85,18 @@ function PostDetail() {
                         <h4>Caption: </h4><p>{post.caption}</p>
                         <div><img src={`http://localhost:8000${post?.post_pic}`} alt="hello" /></div>
                         <button onClick={() => {handleLikePost(post)}}>{
-                            didUserLike
+                            usersPostLikes.find((postLike) => {
+                                if (postLike.post?.id === post.id) {
+                                    return true
+                                }
+                                return false
+                            })
                             ? "Unlike"
                             : "Like"
                         }</button>
+                        <button onClick={() => {
+                            setCommentForm(true)
+                        }}>Comment</button>
                         {
                             postDeleteAuthorize(post)
                             ? <div>
@@ -84,14 +106,25 @@ function PostDetail() {
                         }
                     </div>
                 </fieldset>
+                {
+                    commentForm
+                    ? <CommentForm commentForm={commentForm} setCommentForm={setCommentForm} post={post.id} syncPostComments={syncPostComments}/>
+                    : ""
+                }
                 <fieldset>
                     {
                         postComments.map((postComment) => {
                             return <fieldset><div>
                                 <p>Posted by: {postComment.user?.user?.first_name} {postComment.user?.user?.last_name}</p>
                                 <p>{postComment.comment}</p>
-                            </div></fieldset>
-                        })
+                            </div>
+                            {
+                                didTheyPostTheComment(postComment)
+                                ? <button onClick={() => {deleteComment(postComment.id).then(syncPostComments)}}>Delete Comment</button>
+                                : ""
+                            }
+                            </fieldset>
+                        }).reverse()
                     }
                 </fieldset>
         </>

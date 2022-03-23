@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deletePost, deletePostLike, getPostLikes, getPosts, getUsersPostLikes, likePost } from "./postManager";
+import "./post.css"
 
 function MainFeed() {
     const [posts, setPosts] = useState([])
@@ -67,13 +68,14 @@ function MainFeed() {
         <button onClick={() => {history.push("/newpost")}}>New Post</button>
         {
             posts.map((post) => {
-                return <div>
-                <fieldset key={post.id}>
+                return <div className="fullPost">
+                <fieldset key={post.id} className="post">
                         <p>Posted by:<Link to={`/userprofile/${post.user?.id}`}> {post.user?.user?.first_name} {post.user?.user?.last_name}</Link></p>
                     <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
                     <div>
-                        <h4>Caption: </h4><p>{post.caption}</p>
-                        <div><img src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
+                        {/* <h4>Caption: </h4> */}
+                        <p className="caption__style">Caption: {post.caption}</p>
+                        <div><img className="postPicture" src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
                         {/* <button onClick={() => {handleLikePost(post)}}>{
                             didUserLike
                             ? "Unlike"
@@ -87,7 +89,7 @@ function MainFeed() {
                             : ""
                         } */}
                     </div>
-                </Link>
+                </Link><div className="buttons"><div >
                     <button onClick={() => {handleLikePost(post)}}>{
                         usersPostLikes.find((postLike) => {
                             if (postLike.post.id === post.id) {
@@ -102,12 +104,12 @@ function MainFeed() {
 
                     {
                         postDeleteAuthorize(post)
-                        ? <div>
+                        ? <div >
                                 <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
                                 <button onClick={() => {history.push(`/edit/posts/${post.id}`)}}>Edit Post</button>
                             </div>
                         : ""
-                    }
+                    }</div></div>
                 </fieldset>
                 </div>
             }).reverse()

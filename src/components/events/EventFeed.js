@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteEvent, deleteEventLike, getEvents, getUsersEventLikes, likeEvent } from "./eventManager";
-
+import "./event.css"
 
 function EventFeed() {
     const [events, setEvents] = useState([])
@@ -64,15 +64,16 @@ function EventFeed() {
 
         {
             approvedEvents.map((event) => {
-                return <fieldset key={event.id}>
+                return <fieldset className="event" key={event.id}>
                     <Link to={`/events/${event.id}`}>
-                    <div>
+                    <div className="description">
                         <p>Posted by: {event.user?.user?.first_name} {event.user?.user?.last_name}</p>
                         <p>Event Type: {event.event_type?.event_type}</p>
                         <p>Description: {event.description}</p>
                         <p>Seen from: {event.seen_from}</p>
-                        <div><img src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
+                        <div><img className="eventPicture" src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
                     </div></Link>
+                    <div className="eventbuttons">
                     {
                         JSON.parse(localStorage.getItem('isStaff')) === true
                         ? <button onClick={() => {
@@ -92,7 +93,7 @@ function EventFeed() {
                         // didUserLike(event)
                         // ? "Unlike"
                         // : "Like"
-                    }</button>
+                    }</button></div>
                 </fieldset>
             }).reverse()
         }

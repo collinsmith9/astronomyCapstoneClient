@@ -1,0 +1,41 @@
+.event {
+    display: flex;
+    justify-content: center;
+    
+    border-top: 1px solid black;
+    width: 700px;
+    height: 600px;
+
+    
+    
+}
+
+/* .fullPost {
+    width: 700px;
+} */
+
+.eventPicture {
+    
+    width: 480px;
+    height: auto;
+}
+
+.description {
+    display: flex;
+    flex-wrap: wrap;
+    padding-right: 2.5em;
+    justify-content: center;
+
+}
+
+.postSpacing {
+    padding: 1em;
+}
+
+.eventbuttons {
+    display: flex;
+    
+    
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}

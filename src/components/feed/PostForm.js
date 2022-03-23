@@ -5,10 +5,11 @@ import { getCategories, uploadPost } from "./postManager";
 function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, editCategories }) {
     const history = useHistory()
     const postCaption = useRef()
-    const [selectedCategory, setSelectedCategory] = useState([])
     const [postPicture, setPostPicture] = useState("")
     const [categories, setCategories] = useState([])
     const user = +localStorage.getItem("astronomer")
+    const [selectedCategory, setSelectedCategory] = useState([])
+    const [tryRerender, setTryRerender] = useState(false)
     
 
 
@@ -51,6 +52,63 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
 
     }
 
+    function checkChecked(category) {
+        const x = editCategories.find((cat) => {
+            if (cat.id === +category.id) {
+                return true
+            }
+            return false
+        })
+
+        // const haha = !tryRerender
+        // setTryRerender(haha)
+
+        return x
+    }
+
+    function handleCategoryCheckbox(category, index) {
+        function makingPostFunc() {
+            const isIn = selectedCategory.findIndex((cat) => {
+                if (+category.id === cat) {
+                    return true
+                }
+            })
+            console.log(isIn)
+    
+            if (isIn !== -1) {
+                selectedCategory.splice(isIn, 1)
+            } else {
+                selectedCategory.push(category.id)
+            }
+            console.log(selectedCategory)
+
+        }
+
+        function makingEditFunc() {
+            const isIn = editCategories.findIndex((cat) => {
+                if (+category.id === cat.id) {
+                    return true
+                }
+            })
+            console.log(isIn)
+    
+            if (isIn !== -1) {
+                editCategories.splice(isIn, 1)
+                setTryRerender(!tryRerender)
+            } else {
+                editCategories.push(category)
+                setTryRerender(!tryRerender)
+            }
+            console.log(editCategories)
+
+        }
+
+        postId
+        ? makingEditFunc()
+        : makingPostFunc()
+
+    }
+
 
 
     return (
@@ -69,7 +127,16 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
                 </div>
                 <div>
                     <label>Select the category: </label>
-                    <select className="categorydropdown" onChange={(evt) => {
+                    {
+                        categories.map((cat, index) => {
+                            return <div><input type="checkbox" id={cat.id} value={cat.id} checked={checkChecked(cat) ? true : false} onChange={() => {handleCategoryCheckbox(cat, index)}} />
+                            <label>{cat.category}</label>
+                            
+                            </div>
+
+                        })
+                    }
+                    {/* <select className="categorydropdown" onChange={(evt) => {
                         editCategories.push(+evt.target.value)
                     }}>
                         <option value="0">Select a Category</option>
@@ -78,7 +145,7 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
                                 return <option key={`category--${category.id}`} value={category.id}>{category.category}</option>
                             })
                         }
-                    </select>
+                    </select> */}
                 </div>
                 <div className="field">
                 <label>Replace Image: </label>
@@ -97,7 +164,16 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
                 </div>
                 <div>
                     <label>Select the category: </label>
-                    <select className="categorydropdown" onChange={(evt) => {
+                    {
+                        categories.map((cat, index) => {
+                            return <div><input type="checkbox" id={cat.id} value={cat.id} onChange={() => {handleCategoryCheckbox(cat, index)}} />
+                            <label>{cat.category}</label>
+                            
+                            </div>
+
+                        })
+                    }
+                    {/* <select className="categorydropdown" onChange={(evt) => {
                         selectedCategory.push(+evt.target.value)
                     }}>
                         <option value="0">Select a Category</option>
@@ -106,7 +182,7 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
                                 return <option key={`category--${category.id}`} value={category.id}>{category.category}</option>
                             })
                         }
-                    </select>
+                    </select> */}
                 </div>
                 <div className="field">
                 <input type="file" id="post_image" onChange={createUserImageString} />

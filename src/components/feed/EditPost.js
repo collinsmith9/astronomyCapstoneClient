@@ -14,16 +14,29 @@ function EditPost() {
     const history = useHistory()
 
     useEffect(() => {
-        getSinglePost(postId).then(setPostToEdit)
+        getSinglePost(postId).then((res) => {
+            setPostToEdit(res)
+            setEditCategories(res.categories)
+        })
     },[])
+
+    // useEffect(() => {
+    //     const catIds = postToEdit?.categories?.map((cat) => {
+    //         return cat.id
+    //     })
+    //     setEditCategories(catIds)
+    // },[])
 
     function handleEdit(evt) {
         evt.preventDefault()
+        const arrayToSend = editCategories.map((cat) => {
+            return cat.id
+        })
 
         const updatedPost = {
             caption: postToEdit.caption,
             post_pic: newImgStr,
-            categories: editCategories,
+            categories: arrayToSend,
             user: postToEdit.user?.id,
         }
 

@@ -20,13 +20,13 @@
     height: auto;
 }
 
-.caption__style {
+/* .caption__style {
     display: flex;
     flex-wrap: wrap;
     padding-right: 2.5em;
     justify-content: center;
 
-}
+} */
 
 .postSpacing {
     padding: 1em;

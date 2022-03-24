@@ -76,6 +76,12 @@ function MainFeed() {
                         {/* <h4>Caption: </h4> */}
                         <p className="caption__style">Caption: {post.caption}</p>
                         <div><img className="postPicture" src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
+                        <p>Categories:</p>
+                        {
+                            post.categories?.map((cat) => {
+                                return <p>{cat.category}</p>
+                            })
+                        }
                         {/* <button onClick={() => {handleLikePost(post)}}>{
                             didUserLike
                             ? "Unlike"
@@ -104,7 +110,7 @@ function MainFeed() {
 
                     {
                         postDeleteAuthorize(post)
-                        ? <div >
+                        ? <div>
                                 <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
                                 <button onClick={() => {history.push(`/edit/posts/${post.id}`)}}>Edit Post</button>
                             </div>

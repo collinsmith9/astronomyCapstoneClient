@@ -51,22 +51,22 @@ function EventForm() {
 
     return (
         <>
-        <div className="form">
+        <div className="box">
             <div>
-                <label>Event Name: </label>
-                <input type="text" ref={eventName} placeholder="Type here..." required autoFocus />
+                <label className="label">Event Name: </label>
+                <input className="input" type="text" ref={eventName} placeholder="Type here..." required autoFocus />
             </div>
             <div>
-                <label>Description: </label>
-                <input type="text" ref={eventDescription} placeholder="Type here..." required autoFocus />
+                <label className="label">Description: </label>
+                <input className="input" type="text" ref={eventDescription} placeholder="Type here..." required autoFocus />
             </div>
             <div>
-                <label>Where can this event be seen from? </label>
-                <input type="text" ref={seenFrom} placeholder="Type here..." required autoFocus />
+                <label className="label">Where can this event be seen from? </label>
+                <input className="input" type="text" ref={seenFrom} placeholder="Type here..." required autoFocus />
             </div>
             <div>
-                <label>What type of event is this? </label>
-                <select className="categorydropdown" onChange={(evt) => {
+                <label className="label">What type of event is this? </label>
+                <select onChange={(evt) => {
                     const eventTypeId = evt.target.value
                     setSelectedEventType(eventTypeId)
                 }}>
@@ -82,8 +82,8 @@ function EventForm() {
               <input type="file" id="event_image" onChange={createUserImageString} />
             </div>
             <div>
-                <button type="cancel" onClick={() => {history.push("/events")}}>Cancel</button>
-                <button type="submit_post" onClick={handlePost}> Submit Event </button>
+                <button className="button is-small" type="cancel" onClick={() => {history.push("/events")}}>Cancel</button>
+                <button className="button is-small" type="submit_post" onClick={handlePost}> Submit Event </button>
             </div>
         </div>
         

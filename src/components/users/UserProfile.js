@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { deletePost, deletePostLike, getPosts, getUsersPostLikes, getUsersPosts, likePost } from "../feed/postManager";
 import { editBio, followUser, getUser, getUserFollows, unfollowUser } from "./userManager";
+import "./user.css"
 
 function UserProfile() {
     const [usersPosts, setUsersPosts] = useState([])
@@ -116,9 +117,9 @@ function UserProfile() {
     }
 
     function editBioForm() {
-        return <div>
-            <input type="text" ref={newBio} placeholder="Type bio here..." required autoFocus />
-            <button onClick={() => {setEditBool(false)}}>Cancel</button><button onClick={handleEdit}>Submit</button>
+        return <div className="box">
+            <input className="input" type="text" ref={newBio} placeholder="Type bio here..." required autoFocus />
+            <button className="button is-small" onClick={() => {setEditBool(false)}}>Cancel</button><button className="button is-small" onClick={handleEdit}>Submit</button>
             
             </div>
 
@@ -145,12 +146,12 @@ function UserProfile() {
 
     return (
         <>
-        <fieldset>
+        <fieldset className="box">
         <h1>{theUser.user?.first_name} {theUser.user?.last_name}'s profile</h1>
         {
             loggedInUserCheck()
-            ? <button onClick={() => {setEditBool(true)}}>Edit Bio</button>
-            : <button onClick={() => {
+            ? <button className="button is-small" onClick={() => {setEditBool(true)}}>Edit Bio</button>
+            : <button className="button is-small" onClick={() => {
                 handleFollow()
             }}>{
                 followCheck
@@ -171,13 +172,13 @@ function UserProfile() {
 
         {
             usersPosts.map((post) => {
-                return <div>
+                return <div className="media">
                 <fieldset key={post.id}>
                     <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
-                    <div>
+                    <div className="media-content has-text-black">
                         <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
                         <h4>Caption: </h4><p>{post.caption}</p>
-                        <div><img src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
+                        <div><img className="postpic" src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
                         {/* <button onClick={() => {handleLikePost(post)}}>{
                             didUserLike
                             ? "Unlike"
@@ -192,7 +193,7 @@ function UserProfile() {
                         } */}
                     </div>
                 </Link>
-                    <button onClick={() => {handleLikePost(post)}}>{
+                    <button className="button is-small" onClick={() => {handleLikePost(post)}}>{
                         usersPostLikes.find((postLike) => {
                             if (postLike.post.id === post.id) {
                                 return true
@@ -205,7 +206,7 @@ function UserProfile() {
                     {
                         postDeleteAuthorize(post)
                         ? <div>
-                                <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
+                                <button className="button is-small" onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
                             </div>
                         : ""
                     }

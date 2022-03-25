@@ -8,25 +8,25 @@ function NavBar() {
     const user = +localStorage.getItem("astronomer")
     return (
         <ul className="navbar">
-            <li className="navbar__item active">
-                <Link className="navbar__link" to="/">Feed</Link>
+            <li className="navbar-item active">
+                <Link className="navbar-item" to="/">Feed</Link>
             </li>
-            <li className="navbar__item active">
-                <Link className="navbar__link" to="/events">Event Feed</Link>
+            <li className="navbar-item active">
+                <Link className="navbar-item" to="/events">Event Feed</Link>
             </li>
-            <li className="navbar__item active">
-                <Link className="navbar__link" to={`/userprofile/${user}`}>My Profile</Link>
+            <li className="navbar-item active">
+                <Link className="navbar-item" to={`/userprofile/${user}`}>My Profile</Link>
             </li>
             {
                 !! JSON.parse(localStorage.getItem('isStaff')) === true
-                ? <li className="navbar__item active">
-                    <Link className="navbar__link" to="/eventapproval">Event Approval</Link>
+                ? <li className="navbar-item active">
+                    <Link className="navbar-item" to="/eventapproval">Event Approval</Link>
                 </li>
                 : ""
 
             }
-            <li className="navbar__item active">
-                <Link className="navbar__link" to="#"
+            <li className="navbar-item active">
+                <Link className="navbar-item" to="#"
                 onClick={
                     () => {
                         localStorage.clear()

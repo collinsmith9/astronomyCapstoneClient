@@ -9,14 +9,17 @@
     
     
 }
-
+/* .media {
+    display: flex;
+    width: 75%
+} */
 /* .fullPost {
     width: 700px;
 } */
 
 .postPicture {
     
-    width: 480px;
+    width: 50%;
     height: auto;
 }
 
@@ -34,6 +37,7 @@
 
 .buttons {
     display: flex;
+    flex-direction: row;
     
     
     /* flex-wrap: wrap; */

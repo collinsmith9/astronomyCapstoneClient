@@ -28,6 +28,13 @@ function MainFeed() {
     }
 
     function postDeleteAuthorize(post) {
+        if (post.user.id === user) {
+            return true
+        }
+        return false
+    }
+
+    function quickName(post) {
         if (post.user.id === user || JSON.parse(localStorage.getItem("isStaff")) === true) {
             return true
         }
@@ -65,14 +72,14 @@ function MainFeed() {
         <>
         <h2>Main feed</h2>
 
-        <button onClick={() => {history.push("/newpost")}}>New Post</button>
+        <button className="button" onClick={() => {history.push("/newpost")}}>New Post</button>
         {
             posts.map((post) => {
-                return <div className="fullPost">
-                <fieldset key={post.id} className="post">
+                return <div className="media">
+                <fieldset key={post.id} className="f">
                         <p>Posted by:<Link to={`/userprofile/${post.user?.id}`}> {post.user?.user?.first_name} {post.user?.user?.last_name}</Link></p>
                     <Link className="postDetailsLink" to={`/posts/${post.id}`}> 
-                    <div>
+                    <div className="media-content has-text-black">
                         {/* <h4>Caption: </h4> */}
                         <p className="caption__style">Caption: {post.caption}</p>
                         <div><img className="postPicture" src={`http://localhost:8000${post.post_pic}`} alt="hello" /></div>
@@ -96,7 +103,7 @@ function MainFeed() {
                         } */}
                     </div>
                 </Link><div className="buttons"><div >
-                    <button onClick={() => {handleLikePost(post)}}>{
+                    <button className="button is-small" onClick={() => {handleLikePost(post)}}>{
                         usersPostLikes.find((postLike) => {
                             if (postLike.post.id === post.id) {
                                 return true
@@ -106,16 +113,22 @@ function MainFeed() {
                         ? "Unlike"
                         : "Like"
                     }</button>
-                    <button onClick={() => {history.push(`/posts/${post.id}`)}}>Comment</button>
+                    <button className="button is-small" onClick={() => {history.push(`/posts/${post.id}`)}}>Comment</button>
 
                     {
                         postDeleteAuthorize(post)
-                        ? <div>
-                                <button onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
-                                <button onClick={() => {history.push(`/edit/posts/${post.id}`)}}>Edit Post</button>
+                        ? <div className="buttons">
+                                <button className="button is-small" onClick={() => {history.push(`/edit/posts/${post.id}`)}}>Edit Post</button>
                             </div>
                         : ""
-                    }</div></div>
+                    }
+                    {
+                        quickName(post)
+                        ? <button className="button is-small" onClick={() => {deletePost(post.id).then(() => {syncPosts()})}}>Delete</button>
+                        : ""
+                    }
+                    
+                    </div></div>
                 </fieldset>
                 </div>
             }).reverse()

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { approveEvent, deleteEvent, getEvents } from "./eventManager";
-
+import "./event.css"
 
 function EventApproval() {
     const [events, setEvents] = useState([])
@@ -32,10 +32,10 @@ function EventApproval() {
                         <p>Event Type: {event.event_type?.event_type}</p>
                         <p>Description: {event.description}</p>
                         <p>Seen from: {event.seen_from}</p>
-                        <div><img src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
-                        <button onClick={() => {
+                        <div><img className="eventPicture" src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
+                        <button className="button is-small" onClick={() => {
                             approveEvent(event.id).then(() => {history.push("/events")})
-                        }}>Approve</button><button onClick={() => {
+                        }}>Approve</button><button className="button is-small" onClick={() => {
                             deleteEvent(event.id).then(() => {history.push("/events")})
                         }}>Disapprove</button>
                     </div>

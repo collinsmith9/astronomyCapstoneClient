@@ -114,10 +114,10 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
         <>
         {
             postId
-            ?<div className="form">
+            ?<div className="box">
                 <div>
-                    <label>Caption: </label>
-                    <input type="text"  defaultValue={postToEdit.caption} onChange={(evt) => {
+                    <label className="label">Caption: </label>
+                    <input type="text" className="input"  defaultValue={postToEdit.caption} onChange={(evt) => {
                         const copy = {...postToEdit}
                         copy.caption = evt.target.value
                         setPostToEdit(copy)
@@ -125,7 +125,7 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
                     
                 </div>
                 <div>
-                    <label>Select the category: </label>
+                    <label className="label">Select the category: </label>
                     {
                         categories.map((cat, index) => {
                             return <div><input type="checkbox" id={cat.id} value={cat.id} checked={checkChecked(cat) ? true : false} onChange={() => {handleCategoryCheckbox(cat, index)}} />
@@ -136,39 +136,52 @@ function PostForm({postToEdit, setPostToEdit, handleEdit, postId, setNewImgStr, 
                         })
                     }
                 </div>
+                {/* <div className="file">
+                    <label className="file-label">
+                        <input className="file-input" type="file" id="post_image" onChange={createUserImageString} />
+                        <span className="file-cta">
+                            <span className="file-icon">
+                                <i className="fas fa-upload"></i>
+                            </span>
+                            <span className="file-label">
+                                Choose a file...
+                            </span>
+                        </span>
+                    </label>
+                </div> */}
                 <div className="field">
-                <label>Replace Image: </label>
+                <label className="label">Replace Image: </label>
                 <input type="file" id="post_image" onChange={createUserImageString} />
                 </div>
                 <div>
-                    <button type="cancel" onClick={() => {history.push("/")}}>Cancel</button>
-                    <button type="submit_post" onClick={handleEdit}> Submit Post </button>
+                    <button className="button is-small" type="cancel" onClick={() => {history.push("/")}}>Cancel</button>
+                    <button className="button is-small" type="submit_post" onClick={handleEdit}> Submit Post </button>
                 </div>
             </div>
-            : <div className="form">
-                <div>
-                    <label>Caption: </label>
-                    <input type="text" ref={postCaption} placeholder="Type caption here..." required autoFocus />
+            : <div className="box">
+                <div className="control">
+                    <label className="label">Caption: </label>
+                    <input type="text" className="input" ref={postCaption} placeholder="Type caption here..." required autoFocus />
                     
                 </div>
                 <div>
-                    <label>Select the category: </label>
+                    <label className="label">Select the category: </label>
                     {
                         categories.map((cat, index) => {
-                            return <div><input type="checkbox" id={cat.id} value={cat.id} onChange={() => {handleCategoryCheckbox(cat, index)}} />
-                            <label>{cat.category}</label>
+                            return <div><input type="checkbox" className="checkbox" id={cat.id} value={cat.id} onChange={() => {handleCategoryCheckbox(cat, index)}} />
+                            <label className="checkbox">{cat.category}</label>
                             
                             </div>
 
                         })
                     }
                 </div>
-                <div className="field">
+                <div>
                 <input type="file" id="post_image" onChange={createUserImageString} />
                 </div>
                 <div>
-                    <button type="cancel" onClick={() => {history.push("/")}}>Cancel</button>
-                    <button type="submit_post" onClick={handlePost}> Submit Post </button>
+                    <button className="button is-small" type="cancel" onClick={() => {history.push("/")}}>Cancel</button>
+                    <button className="button is-small" type="submit_post" onClick={handlePost}> Submit Post </button>
                 </div>
             </div>
         }

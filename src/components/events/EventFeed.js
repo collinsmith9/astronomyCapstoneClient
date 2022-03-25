@@ -60,28 +60,28 @@ function EventFeed() {
     return (
         <>
         <h1>Event Feed</h1>
-        <button onClick={() => {history.push("/newevent")}}>New Event</button>
+        <button className="button" onClick={() => {history.push("/newevent")}}>New Event</button>
 
         {
             approvedEvents.map((event) => {
-                return <fieldset className="event" key={event.id}>
+                return <div className="media" key={event.id}>
                     <Link to={`/events/${event.id}`}>
-                    <div className="description">
+                    <div className="media-content has-text-black">
                         <p>Posted by: {event.user?.user?.first_name} {event.user?.user?.last_name}</p>
                         <p>Event Type: {event.event_type?.event_type}</p>
                         <p>Description: {event.description}</p>
                         <p>Seen from: {event.seen_from}</p>
                         <div><img className="eventPicture" src={`http://localhost:8000${event.event_pic}`} alt="hello" /></div>
                     </div></Link>
-                    <div className="eventbuttons">
+                    <div className="is-flex-direction-row">
                     {
                         JSON.parse(localStorage.getItem('isStaff')) === true
-                        ? <button onClick={() => {
+                        ? <button className="button is-small" onClick={() => {
                             deleteEvent(event.id).then(syncEvents)
                         }}>Delete Event</button>
                         : ""
                     }
-                     <button onClick={() => {handleEventLike(event)}}>{
+                     <button className="button is-small" onClick={() => {handleEventLike(event)}}>{
                         usersEventLikes.find((eventLike) => {
                             if (+eventLike.event?.id === +event.id) {
                                 return true
@@ -94,7 +94,7 @@ function EventFeed() {
                         // ? "Unlike"
                         // : "Like"
                     }</button></div>
-                </fieldset>
+                </div>
             }).reverse()
         }
 

@@ -69,12 +69,12 @@ function EventDetail() {
     return (
         <>
         <fieldset key={event.id}>
-                    <div>
+                    <div className="box">
                         <h4>Event: {event.name}</h4>
                         <h4>Description: </h4><p>{event.description}</p>
                         <p>Seen From: {event.seen_from}</p>
                         <div><img src={`http://localhost:8000${event?.event_pic}`} alt="hello" /></div>
-                        <button onClick={() => {handleEventLike(event)}}>{
+                        <button className="button" onClick={() => {handleEventLike(event)}}>{
                             usersEventLikes.find((eventLike) => {
                                 if (eventLike.event?.id === event.id) {
                                     return true
@@ -84,13 +84,13 @@ function EventDetail() {
                             ? "Unlike"
                             : "Like"
                         }</button>
-                        <button onClick={() => {
+                        <button className="button" onClick={() => {
                             setCommentForm(true)
                         }}>Comment</button>
                         {
                             !! JSON.parse(localStorage.getItem('isStaff')) === true
                             ? <div>
-                                <button onClick={() => {deleteEvent(event.id).then(() => {history.push("/events")})}}>Delete</button>
+                                <button className="button" onClick={() => {deleteEvent(event.id).then(() => {history.push("/events")})}}>Delete</button>
                             </div>
                             : ""
                         }

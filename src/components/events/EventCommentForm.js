@@ -22,9 +22,9 @@ function EventCommentForm ({commentForm, setCommentForm, event, syncEventComment
     return (
         <>
         <div>
-            <input type="text" ref={comment} placeholder="Comment" required autoFocus />
+            <input className="input" type="text" ref={comment} placeholder="Comment" required autoFocus />
         
-        <button onClick={() => {setCommentForm(!commentForm)}}>Cancel</button><button onClick={handleComment}>Submit</button>
+        <button className="button is-small" onClick={() => {setCommentForm(!commentForm)}}>Cancel</button><button className="button is-small" onClick={handleComment}>Submit</button>
         </div>
         </>
     )

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { deleteComment, deletePost, deletePostLike, getPostComments, getSinglePost, getUsersPostLikes, likePost } from './postManager';
-
+import "./post.css"
 
 function PostDetail() {
     const [post, setPost] = useState({})
@@ -83,8 +83,8 @@ function PostDetail() {
                     <div>
                         <p>Posted by: {post.user?.user?.first_name} {post.user?.user?.last_name}</p>
                         <h4>Caption: </h4><p>{post.caption}</p>
-                        <div><img src={`http://localhost:8000${post?.post_pic}`} alt="hello" /></div>
-                        <button onClick={() => {handleLikePost(post)}}>{
+                        <div><img className="postPicture" src={`http://localhost:8000${post?.post_pic}`} alt="hello" /></div>
+                        <button className="button" onClick={() => {handleLikePost(post)}}>{
                             usersPostLikes.find((postLike) => {
                                 if (postLike.post?.id === post.id) {
                                     return true
@@ -94,13 +94,13 @@ function PostDetail() {
                             ? "Unlike"
                             : "Like"
                         }</button>
-                        <button onClick={() => {
+                        <button className="button" onClick={() => {
                             setCommentForm(true)
                         }}>Comment</button>
                         {
                             postDeleteAuthorize(post)
                             ? <div>
-                                <button onClick={() => {deletePost(post.id).then(() => {history.push("/")})}}>Delete</button>
+                                <button className="button" onClick={() => {deletePost(post.id).then(() => {history.push("/")})}}>Delete</button>
                             </div>
                             : ""
                         }

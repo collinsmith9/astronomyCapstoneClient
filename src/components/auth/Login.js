@@ -47,17 +47,17 @@ function Login() {
                     <h1>Astronomy Site</h1>
                     <h2>Please sign in</h2>
                     <fieldset>
-                        <label htmlFor="inputUsername"> Username address </label>
-                        <input ref={username} type="username" id="username" className="form-control" placeholder="Username address" required autoFocus />
+                        <label className="label" htmlFor="inputUsername"> Username address </label>
+                        <input className="input" ref={username} type="username" id="username" placeholder="Username address" required autoFocus />
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="inputPassword"> Password </label>
-                        <input ref={password} type="password" id="password" className="form-control" placeholder="Password" required />
+                        <label className="label" htmlFor="inputPassword"> Password </label>
+                        <input className="input" ref={password} type="password" id="password" placeholder="Password" required />
                     </fieldset>
                     <fieldset style={{
                         textAlign: "center"
                     }}>
-                        <button className="btn btn-1 btn-sep icon-send" type="submit" onClick={handleLogin}>Sign In</button>
+                        <button className="button is-small" type="submit" onClick={handleLogin}>Sign In</button>
                     </fieldset>
                 </form>
             </section>
